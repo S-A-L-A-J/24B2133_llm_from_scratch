@@ -185,3 +185,15 @@ class GPTModel(nn.Module):
         x = self.final_norm(x)
         logits = self.out_head(x)
         return logits
+    
+def simple_text_gen(model, idx, max_tokens, context_size):
+    for _ in range(max_tokens):
+        idx_cond = idx[:, -context_size:]
+        with torch.no_grad():
+            logits = model(idx_cond)
+        
+        logits = logits[:, -1, :]
+        probabilities = torch.softmax(logits, dim =-1)
+        idx_nxt = torch.argmax(probabilities, dim=-1, keepdim=True)
+        idx = torch.cat((idx, idx_nxt), dim=1)
+    return idx
