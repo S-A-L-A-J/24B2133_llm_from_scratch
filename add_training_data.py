@@ -5,7 +5,7 @@ import tiktoken
 from important_GPT_blocks import create_dataloader_v1, simple_text_gen, GPT_CONFIG_124M
 
 tokenizer = tiktoken.get_encoding("gpt2")
-file_path = "train1.pdf"
+file_path = "relativity.pdf"
 doc = fitz.open(file_path)
 text_data = ""
 for page in doc:
